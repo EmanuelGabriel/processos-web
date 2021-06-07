@@ -10,20 +10,23 @@
 
     <div [style.margin-botton]="'2.5em'">
 
-        <form fxLayout="row wrap" fxLayoutAlign="space-around start">
+        <form fxLayout="row wrap" fxLayoutAlign="space-around start" [formGroup]="frmSituacao">
 
             <div class="titulo_" fxFlex="100" [style.margin-bottom]="'1em'">
                 Descrição
             </div>
 
             <mat-form-field appearance="outline" fxFlex="100" class="example-full-width">
-                <mat-label>Nome da Situação</mat-label>
-                <input type="text" matInput [maxLength]="100" [required]="true">
+                <mat-label>Situação</mat-label>
+                <input type="text" name="descricao" matInput name="descricao" id="descricao" formControlName="descricao">
+                <mat-error *ngIf="frmSituacao.controls['descricao'].hasError">Campo situação é obrigatório</mat-error>
+                <mat-error *ngIf="frmSituacao.controls['descricao'].errors?.mlength">Mínimo 5 caracteres</mat-error>
+                <mat-error *ngIf="frmSituacao.controls['descricao'].errors?.maxlength">Campo deve conter 90 caracteres</mat-error>
             </mat-form-field>
-
         </form>
 
-        <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+
+        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="frmSituacao.invalid">Salvar</button>
 
     </div>
 

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Situacao } from '../model/situacao';
@@ -9,9 +11,17 @@ import { SituacaoService } from '../situacao.service';
   templateUrl: './consultar-situacao.component.html',
   styleUrls: ['./consultar-situacao.component.scss']
 })
-export class ConsultarSituacaoComponent implements OnInit {
+export class ConsultarSituacaoComponent implements OnInit, AfterViewInit {
 
+  displayedColumns: string[] = ['id', 'nome_situacao', 'acoes'];
   situacoes: Situacao[] = [];
+
+  dataSituacao = new MatTableDataSource<Situacao>(this.situacoes);
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSituacao.paginator = this.paginator;
+  }
 
 
   totalElementos = 0;
@@ -31,7 +41,12 @@ export class ConsultarSituacaoComponent implements OnInit {
 
   getAll() {
     this.situacaoService.getAll().subscribe(resposta => {
-      this.situacoes = resposta;
+      this.dataSituacao = new MatTableDataSource<Situacao>(resposta);
+      this.dataSituacao.paginator = this.paginator;
+      this.dataSituacao.paginator._intl.itemsPerPageLabel = 'Exibir';
+      this.dataSituacao.paginator._intl.nextPageLabel = 'Próxima página';
+      this.dataSituacao.paginator._intl.previousPageLabel = 'Página anterior';
+      // this.situacoes = resposta;
       console.log(resposta);
     });
   }
@@ -44,7 +59,6 @@ export class ConsultarSituacaoComponent implements OnInit {
   remover(situacao: Situacao) {
     console.log(situacao);
   }
-
 
 
 }

@@ -21,8 +21,8 @@ export class SituacaoService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   }
 
-  criar(situacao: Situacao): Observable<SituacaoDTO>{
-    return this.http.post<SituacaoDTO>(`${this.url}`, situacao, { headers: this.httpOptions.headers }).pipe(take(1));
+  criar(situacao: Situacao): Observable<SituacaoDTO> {
+    return this.http.post<SituacaoDTO>(`${this.url}`, situacao).pipe(take(1));
   }
 
   getAll(): Observable<Situacao[]> {
