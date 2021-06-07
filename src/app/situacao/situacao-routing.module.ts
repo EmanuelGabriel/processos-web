@@ -12,6 +12,10 @@ const routes: Routes = [
     path: 'novo',
     component: CadastrarSituacaoComponent
   },
+  {
+    path: ':id/:editar',
+    component: CadastrarSituacaoComponent
+  },
 ];
 
 @NgModule({

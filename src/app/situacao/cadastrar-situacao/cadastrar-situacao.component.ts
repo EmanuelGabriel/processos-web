@@ -18,6 +18,9 @@ export class CadastrarSituacaoComponent implements OnInit {
   situacao: Situacao;
   situacaoDto: SituacaoDTO;
 
+  id: any;
+  editar: any;
+
   constructor(private title: Title,
     private fb: FormBuilder,
     private situacaoService: SituacaoService,
@@ -28,15 +31,35 @@ export class CadastrarSituacaoComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle('Nova Situação');
 
+    this.route.params.subscribe(resp => {
+      this.id = resp.id;
+      if (resp.editar) {
+        this.editar = resp.editar === 'true';
+      }
+    });
 
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.getById(parseInt(id, 0));
+
+    if(this.id){
+       this.situacaoService.getById(this.id).subscribe(resp => {
+          this.frmSituacao.patchValue({
+             id: resp.id,
+             descricao: resp.descricao 
+          });
+       });
+
+       this.title.setTitle('Editar Situação');
+       if(!this.editar){
+         this.frmSituacao.disable();
+       }
+
+    }else{
+        console.log('faça algo');
     }
+
+
 
     this.validarForm();
   }
-
 
   getById(id: number) {
     this.situacaoService.getById(id).subscribe(resp => {
