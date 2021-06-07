@@ -1,0 +1,36 @@
+<div class="container">
+    <!-- Content here -->
+
+    <h2 style="text-align:left; width:100%; padding:0;margin-top: 25px; margin-bottom: 20px;">Consultar Situação</h2>
+
+    <div style="text-align:right; width:100%; padding:0;margin-top: 25px; margin-bottom: 20px;">
+        <button type="button" class="btn btn-success" routerLink="/situacao/novo">Nova Situação</button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome da Situação</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let sit of situacoes">
+                    <th scope="row">{{ sit.id }}</th>
+                    <td>{{ sit.descricao }}</td>
+                    <td>
+                        <button type="button" class="btn btn-warning btn-sm ml-1" (click)="editar(sit)">Editar</button>
+                        <button type="button" class="btn btn-danger btn-sm ml-1" (click)="remover(sit)">Remover</button>
+                    </td>
+                </tr>
+            </tbody>
+
+            <caption>Total de {{ totalElementos }} documentos</caption>
+        </table>
+
+    </div>
+
+</div>

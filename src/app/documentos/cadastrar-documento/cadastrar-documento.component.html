@@ -1,0 +1,73 @@
+<div class="container">
+
+    <!-- Content here -->
+
+    <h2 style="text-align:left; width:100%; padding:0;margin-top: 25px; margin-bottom: 20px;">Novo Ducumento</h2>
+
+    <div style="text-align:right; width:100%; padding:0;margin-top: 25px; margin-bottom: 20px;">
+        <button type="button" class="btn btn-primary" routerLink="/documentos/">Consultar Documento</button>
+    </div>
+
+
+    <form>
+
+        <div class="form-group">
+            <label for="nomeDocumento">Nome Documento</label>
+            <input type="text" class="form-control" id="nomeDocumento" placeholder="Nome do documento">
+        </div>
+
+        <div class="form-group">
+            <label for="numeroProcesso">Número Processo</label>
+            <input type="number" class="form-control" id="numeroProcesso" placeholder="Número do processo">
+        </div>
+
+        <div class="form-group">
+            <label for="dataEstimadaConclusao">Data Estimada de Conclusão</label>
+            <input type="date" class="form-control" id="dataEstimadaConclusao"
+                placeholder="Data estimada para conclusão">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+
+    </form>
+
+
+</div>
+
+
+<div class="container">
+
+
+    <div class="titulo" [style.margin-botton]="'1.5em'">
+
+    </div>
+
+    <div [style.margin-botton]="'2.5em'">
+
+        <form fxLayout="row wrap" fxLayoutAlign="space-around start">
+
+            <div class="titulo_" fxFlex="100" [style.margin-bottom]="'1em'">
+                Novo Documento
+            </div>
+
+            <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Nome do Documento</mat-label>
+                <input type="text" matInput [maxLength]="100" [required]="true">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Nº do Processo</mat-label>
+                <input type="number" matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Data Estimada de Conclusão</mat-label>
+                <input type="date" matInput>
+            </mat-form-field>
+
+        </form>
+
+    </div>
+
+
+</div>

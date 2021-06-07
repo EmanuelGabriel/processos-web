@@ -1,0 +1,45 @@
+<div class="container">
+    <!-- Content here -->
+
+    <h2 style="text-align:left; width:100%; padding:0;margin-top: 25px; margin-bottom: 20px;">Consultar Documento</h2>
+
+    <div style="text-align:right; width:100%; padding:0;margin-top: 25px; margin-bottom: 20px;">
+        <button type="button" class="btn btn-success" routerLink="/documentos/novo">Novo Documento</button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome do Documento</th>
+                    <th scope="col">Nº Processo</th>
+                    <th scope="col">Data de Cadastro</th>
+                    <th scope="col">Conclusão Estimada</th>
+                    <th scope="col">Situação</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let doc of documentos">
+                    <th scope="row">{{ doc.id }}</th>
+                    <td>{{ doc.nomeDocumento }}</td>
+                    <td>{{ doc.numeroProcesso }}</td>
+                    <td>{{ doc.dataCadastro | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ doc.dataEstimadaConclusao | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ doc.situacao }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm" (click)="detalhar(doc)">Detalhar</button>
+                        <button type="button" class="btn btn-warning btn-sm ml-1" (click)="editar(doc)">Editar</button>
+                        <button type="button" class="btn btn-danger btn-sm ml-1" (click)="remover(doc)">Remover</button>
+                    </td>
+                </tr>
+            </tbody>
+
+            <caption>Total de {{ totalElementos }} documentos</caption>
+        </table>
+
+    </div>
+
+</div>
