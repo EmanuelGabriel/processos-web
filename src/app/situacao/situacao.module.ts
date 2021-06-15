@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -27,6 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     SituacaoRoutingModule,
     ReactiveFormsModule,
+    NgxSpinnerModule,
 
     MatInputModule,
     MatButtonModule,

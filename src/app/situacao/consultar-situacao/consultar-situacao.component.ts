@@ -3,6 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Situacao } from '../model/situacao';
 import { SituacaoService } from '../situacao.service';
 
@@ -31,7 +33,9 @@ export class ConsultarSituacaoComponent implements OnInit, AfterViewInit {
   constructor(
     private situacaoService: SituacaoService,
     private titulo: Title,
-    private router: Router) { }
+    private router: Router,
+    private modalService: NgbModal,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.titulo.setTitle('Consultar Situação')
@@ -41,14 +45,23 @@ export class ConsultarSituacaoComponent implements OnInit, AfterViewInit {
 
   getAll() {
     this.situacaoService.getAll().subscribe(resposta => {
-      this.dataSituacao = new MatTableDataSource<Situacao>(resposta);
-      this.dataSituacao.paginator = this.paginator;
-      this.dataSituacao.paginator._intl.itemsPerPageLabel = 'Exibir';
-      this.dataSituacao.paginator._intl.nextPageLabel = 'Próxima página';
-      this.dataSituacao.paginator._intl.previousPageLabel = 'Página anterior';
-      // this.situacoes = resposta;
+      //this.dataSituacao = new MatTableDataSource<SituacaoDTO>(resposta);
+      //this.dataSituacao.paginator = this.paginator;
+      //this.dataSituacao.paginator._intl.itemsPerPageLabel = 'Exibir';
+      //this.dataSituacao.paginator._intl.nextPageLabel = 'Próxima página';
+      //this.dataSituacao.paginator._intl.previousPageLabel = 'Página anterior';
+      // this.dataSituacao = new MatTableDataSource<SituacaoDTO>(resposta.con);
+      this.spinner.show();
+      this.situacoes = resposta.content;
+      this.totalElementos = resposta.totalElements;
+      this.pagina = resposta.number;
       console.log(resposta);
-    });
+    }, err => {
+      this.spinner.hide();
+    },
+      () => {
+        this.spinner.hide();
+      });
   }
 
   editar(situacao: Situacao) {
@@ -60,5 +73,9 @@ export class ConsultarSituacaoComponent implements OnInit, AfterViewInit {
     console.log(situacao);
   }
 
+  abrirDialogoInformacoesDemanda(situacao: Situacao) {
+    const modalRefInformacoesDemandas = this.modalService.open(ConsultarSituacaoComponent);
+    modalRefInformacoesDemandas.componentInstance.demanda = situacao;
+  }
 
 }

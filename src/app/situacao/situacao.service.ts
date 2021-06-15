@@ -25,8 +25,8 @@ export class SituacaoService {
     return this.http.post<SituacaoDTO>(`${this.url}`, situacao).pipe(take(1));
   }
 
-  getAll(): Observable<Situacao[]> {
-    return this.http.get<Situacao[]>(`${this.url}`, { headers: this.httpOptions.headers }).pipe(take(1));
+  getAll(): Observable<SituacaoDTO> {
+    return this.http.get<SituacaoDTO>(`${this.url}`, { headers: this.httpOptions.headers }).pipe(take(1));
   }
 
   getById(idDocumento: number): Observable<Situacao> {

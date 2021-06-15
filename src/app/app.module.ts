@@ -20,6 +20,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { FooterComponent } from './components/template/footer/footer.component';
 import { NavComponent } from './components/template/nav/nav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxSpinnerModule,
     NgxMaskModule.forRoot(),
     MatToolbarModule,
     MatSidenavModule,
