@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -21,12 +22,20 @@ export class CadastrarSituacaoComponent implements OnInit {
   id: any;
   editar: any;
 
+  selecionarFile: File;
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
+  message: string;
+  imageName: any;
+
   constructor(private title: Title,
     private fb: FormBuilder,
     private situacaoService: SituacaoService,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private http: HttpClient) { }
 
   ngOnInit(): void {
     this.title.setTitle('Nova Situação');
@@ -39,21 +48,21 @@ export class CadastrarSituacaoComponent implements OnInit {
     });
 
 
-    if(this.id){
-       this.situacaoService.getById(this.id).subscribe(resp => {
-          this.frmSituacao.patchValue({
-             id: resp.id,
-             descricao: resp.descricao 
-          });
-       });
+    if (this.id) {
+      this.situacaoService.getById(this.id).subscribe(resp => {
+        this.frmSituacao.patchValue({
+          id: resp.id,
+          descricao: resp.descricao
+        });
+      });
 
-       this.title.setTitle('Editar Situação');
-       if(!this.editar){
-         this.frmSituacao.disable();
-       }
+      this.title.setTitle('Editar Situação');
+      if (!this.editar) {
+        this.frmSituacao.disable();
+      }
 
-    }else{
-        console.log('faça algo');
+    } else {
+      console.log('faça algo');
     }
 
 
@@ -92,5 +101,38 @@ export class CadastrarSituacaoComponent implements OnInit {
   limparForm(): void {
     this.frmSituacao.reset();
   }
+
+  public onFileChanged(event: any) {
+    //Select File
+    this.selecionarFile = event.target.files[0];
+  }
+
+
+  onUpload() {
+    console.log(this.selecionarFile);
+    const uploadImageData = new FormData();
+    uploadImageData.append('imageFile', this.selecionarFile, this.selecionarFile.name);
+    this.http.post('http://localhost:9090/v1/uploads', uploadImageData, { observe: 'response' })
+      .subscribe((response) => {
+        if (response.status === 200) {
+          this.message = 'Upload realizado com sucesso!';
+        } else {
+          this.message = 'Não foi possível realizar o upload da imagem';
+        }
+      });
+
+  }
+
+  //Gets called when the user clicks on retieve image button to get the image from back end
+  getImage() {
+    //Make a call to Sprinf Boot to get the Image Bytes.
+    this.http.get('http://localhost:9090/v1/uploads/get' + this.imageName).subscribe(res => {
+      this.retrieveResonse = res;
+      this.base64Data = this.retrieveResonse.image;
+      this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+    });
+  }
+
+
 
 }
