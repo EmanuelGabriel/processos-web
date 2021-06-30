@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -103,7 +103,7 @@ export class CadastrarSituacaoComponent implements OnInit {
   }
 
   public onFileChanged(event: any) {
-    //Select File
+    //Selecionar File
     this.selecionarFile = event.target.files[0];
   }
 
@@ -126,13 +126,21 @@ export class CadastrarSituacaoComponent implements OnInit {
   //Gets called when the user clicks on retieve image button to get the image from back end
   getImage() {
     //Make a call to Sprinf Boot to get the Image Bytes.
-    this.http.get('http://localhost:9090/v1/uploads/get' + this.imageName).subscribe(res => {
-      this.retrieveResonse = res;
+    const parametros = new HttpParams()
+    .set('nomeImagem', this.imageName);
+
+    //    console.log(`${this.url}/nome?${parametros.toString()}`);     
+    // return this.http.get<any>(`${this.url}/nome?${parametros.toString()}`).pipe(take(1)); 
+    // http://localhost:9090/v1/uploads/get?nomeImagem=Boleto_494865. 
+    // Request URL: http://localhost:9090/v1/uploads/get?nomeImagem=undefined
+    // http://localhost:9090/v1/uploads/getTest/Boleto_494865.pdf
+
+    this.http.get('http://localhost:9090/v1/uploads/getTest/' + this.imageName).subscribe(resp => {
+      this.retrieveResonse = resp;
       this.base64Data = this.retrieveResonse.image;
       this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
     });
   }
-
 
 
 }
