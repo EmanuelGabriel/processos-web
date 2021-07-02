@@ -3,5 +3,6 @@ export interface UploadArquivo {
     type: string
     nome: string;
     tamanho: number;
-    dados: any;
+    dados: string;
+    dataCadastro: Date;
 }

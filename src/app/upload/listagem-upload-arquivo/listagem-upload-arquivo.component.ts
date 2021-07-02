@@ -19,7 +19,7 @@ export class ListagemUploadArquivoComponent implements OnInit {
 
   arquivos: UploadArquivo[] = [];
   uploadArquivo: UploadArquivo;
-  nomeArquivo = null;
+  nomeArquivo: any;
   arrayArquivo: any;
 
 
@@ -78,12 +78,27 @@ export class ListagemUploadArquivoComponent implements OnInit {
     console.log(base64);
     const blob = await base64.blob();
     console.log(blob);
-    let file = new Blob([arquivo.dados], { type: 'application/octet-stream'  });
+    let file = new Blob([arquivo.dados], { type: 'application/octet-stream' });
     let fileURL = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file));
     //window.open(fileURL);
     //URL.createObjectURL(file);
     console.log(fileURL);
     //window.open(fileURL);
+  }
+
+  /**
+  * Realizar download dos arquivos
+  * @param arquivo 
+  * application/octet-stream
+  * data:image/jpeg;base64,
+  */
+  async downloadArquivos(arquivo: UploadArquivo) {
+    const base64 = await fetch('data:application/octet-stream;base64,' + arquivo.dados);
+    const blob = await base64.blob();
+    let file = new Blob([blob], { type: 'application/pdf'});
+    let fileURL = URL.createObjectURL(file);
+    console.log(fileURL);
+    window.open(fileURL);
   }
 
   async insereArquivo(event: any) {

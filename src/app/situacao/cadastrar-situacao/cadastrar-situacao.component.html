@@ -66,6 +66,7 @@
                     <th width="40%">Nome do Arquivo</th>
                     <th>Tipo/Conteúdo</th>
                     <th>Tamanho</th>
+                    <th>Data/Criação</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -75,6 +76,7 @@
                     <td>{{file.nome}}</td>
                     <td>{{file.type}}</td>
                     <td>{{file.tamanho}}</td>
+                    <td>{{file.dataCriacao}}</td>
                     <td>
                         <button class="btn btn-icon btn-3 btn-primary btn-sm" *ngIf="file.dados">
                             <span class="btn-inner--icon"><i class="fa fa-download"></i></span>

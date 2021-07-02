@@ -4,4 +4,5 @@ export interface FileModelResponse {
 	nome: string;
 	tamanho: number;
 	dados: any;
+	dataCriacao: Date;
 }

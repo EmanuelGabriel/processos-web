@@ -19,6 +19,7 @@
                     <th width="45%">Nome do Arquivo</th>
                     <th width="12%">Tipo/Conteúdo</th>
                     <th style="text-align: center;">Tamanho</th>
+                    <th style="text-align: center;">Data/Cadastro</th>
                     <th style="text-align: center;">Ações</th>
                 </tr>
             </thead>
@@ -37,9 +38,12 @@
                     <td style="text-align:center;">
                         {{arquivo.tamanho}}
                     </td>
+                    <td style="text-align:center;">
+                        {{arquivo.dataCadastro | date:"dd/MM/yyyy" }}
+                    </td>
                     <td style="text-align: center;">
                         <button class="btn btn-icon btn-3 btn-primary btn-sm" *ngIf="arquivo.dados"
-                            (click)="downloadArquivo(arquivo)">
+                            (click)="downloadArquivos(arquivo)">
                             <span class="btn-inner--icon"><i class="fa fa-download"></i></span>
                         </button>
                     </td>
