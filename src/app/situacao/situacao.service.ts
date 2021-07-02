@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { FileModelResponse } from './model/file-model-response';
 import { Situacao } from './model/situacao';
 import { SituacaoDTO } from './model/situacaoDTO';
 
@@ -13,6 +14,7 @@ export class SituacaoService {
 
   url = `${environment.urlBASE}/situacao-processo`;
 
+  urlBase = `${environment.baseURL}/upload`;
 
   constructor(private http: HttpClient) { }
 
@@ -31,6 +33,12 @@ export class SituacaoService {
 
   getById(idDocumento: number): Observable<Situacao> {
     return this.http.get<Situacao>(`${this.url}`);
+  }
+
+  adicionarFile(file: File): Observable<FileModelResponse> {
+    const frmData = new FormData();
+    frmData.append('file', file);
+    return this.http.post<FileModelResponse>(this.urlBase, file);
   }
 
 

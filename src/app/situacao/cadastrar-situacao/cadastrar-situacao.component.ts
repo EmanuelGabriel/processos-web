@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { FileModelResponse } from '../model/file-model-response';
 import { Situacao } from '../model/situacao';
 import { SituacaoDTO } from '../model/situacaoDTO';
 import { SituacaoService } from '../situacao.service';
@@ -18,11 +19,14 @@ export class CadastrarSituacaoComponent implements OnInit {
   frmSituacao: FormGroup;
   situacao: Situacao;
   situacaoDto: SituacaoDTO;
+  fileModel: FileModelResponse;
 
   id: any;
   editar: any;
 
   selecionarFile: File;
+  arquivos = new Array<any>();
+
   retrievedImage: any;
   base64Data: any;
   retrieveResonse: any;
@@ -62,12 +66,13 @@ export class CadastrarSituacaoComponent implements OnInit {
       }
 
     } else {
-      console.log('faça algo');
     }
 
 
 
     this.validarForm();
+
+    this.getAll();
   }
 
   getById(id: number) {
@@ -100,6 +105,7 @@ export class CadastrarSituacaoComponent implements OnInit {
 
   limparForm(): void {
     this.frmSituacao.reset();
+
   }
 
   public onFileChanged(event: any) {
@@ -111,36 +117,46 @@ export class CadastrarSituacaoComponent implements OnInit {
   onUpload() {
     console.log(this.selecionarFile);
     const uploadImageData = new FormData();
-    uploadImageData.append('imageFile', this.selecionarFile, this.selecionarFile.name);
-    this.http.post('http://localhost:9090/v1/uploads', uploadImageData, { observe: 'response' })
+    uploadImageData.append('file', this.selecionarFile, this.selecionarFile.name);
+    // this.http.post('http://localhost:9090/v1/uploads',
+    this.http.post('http://localhost:8080/upload', uploadImageData, { observe: 'response' })
       .subscribe((response) => {
+        console.log(response.body);
         if (response.status === 200) {
-          this.message = 'Upload realizado com sucesso!';
+          this.arquivos.push(response.body);
+          this.toastr.success('Upload realizado com sucesso!')
         } else {
-          this.message = 'Não foi possível realizar o upload da imagem';
+          this.toastr.warning('Não foi possível realizar o upload da imagem')
         }
       });
 
   }
 
-  //Gets called when the user clicks on retieve image button to get the image from back end
-  getImage() {
-    //Make a call to Sprinf Boot to get the Image Bytes.
-    const parametros = new HttpParams()
-    .set('nomeImagem', this.imageName);
+  getAll() {
+    this.http.get('http://localhost:8080/upload').subscribe((resp) => {
+      console.log(resp);
+      this.arquivos.push(resp);
+      //this.arquivos = resp;
+    });
 
+  }
+
+  getDownload() {
+    const parametros = new HttpParams()
+      .set('nomeImagem', this.imageName);
     //    console.log(`${this.url}/nome?${parametros.toString()}`);     
     // return this.http.get<any>(`${this.url}/nome?${parametros.toString()}`).pipe(take(1)); 
     // http://localhost:9090/v1/uploads/get?nomeImagem=Boleto_494865. 
     // Request URL: http://localhost:9090/v1/uploads/get?nomeImagem=undefined
     // http://localhost:9090/v1/uploads/getTest/Boleto_494865.pdf
-
-    this.http.get('http://localhost:9090/v1/uploads/getTest/' + this.imageName).subscribe(resp => {
+    // this.http.post('http://localhost:8080/upload'
+    this.http.get('http://localhost:8080/upload' + this.imageName).subscribe(resp => {
       this.retrieveResonse = resp;
       this.base64Data = this.retrieveResonse.image;
       this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
     });
   }
+
 
 
 }
