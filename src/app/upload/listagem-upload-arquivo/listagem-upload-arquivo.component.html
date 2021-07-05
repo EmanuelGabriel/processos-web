@@ -1,3 +1,11 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-loader" [fullScreen]="true"
+    [disableAnimation]="true">
+    <p style="color: white">
+        Carregando...
+    </p>
+</ngx-spinner>
+
+
 <div class="container">
     <!-- Content here -->
 
@@ -18,8 +26,8 @@
                     <th width="8%">#</th>
                     <th width="45%">Nome do Arquivo</th>
                     <th width="12%">Tipo/Conteúdo</th>
-                    <th style="text-align: center;">Tamanho</th>
-                    <th style="text-align: center;">Data/Cadastro</th>
+                    <th width="12%">Tamanho</th>
+                    <th width="12%">Data/Cadastro</th>
                     <th style="text-align: center;">Ações</th>
                 </tr>
             </thead>
@@ -27,7 +35,7 @@
             <tbody>
                 <tr *ngFor="let arquivo of arquivos">
                     <td class="td-no-white-spaces">
-                        {{ arquivo.id}}
+                        {{arquivo.id}}
                     </td>
                     <td>
                         {{arquivo.nome}}
@@ -35,10 +43,10 @@
                     <td>
                         {{arquivo.type}}
                     </td>
-                    <td style="text-align:center;">
+                    <td>
                         {{arquivo.tamanho}}
                     </td>
-                    <td style="text-align:center;">
+                    <td>
                         {{arquivo.dataCadastro | date:"dd/MM/yyyy" }}
                     </td>
                     <td style="text-align: center;">

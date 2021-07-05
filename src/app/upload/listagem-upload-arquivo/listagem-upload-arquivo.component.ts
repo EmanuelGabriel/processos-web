@@ -4,10 +4,16 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { UploadArquivo } from '../model/upload-arquivo';
 import { UploadService } from '../upload.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { UploadArquivo } from '../model/upload-arquivo';
 
+
+const MIME_TYPES = {
+  pdf: 'application/pdf',
+  octet: 'application/octet-stream',
+  png: 'image/png',
+  jpeg: 'image/jpeg',
+}
 
 
 @Component({
@@ -30,13 +36,12 @@ export class ListagemUploadArquivoComponent implements OnInit {
 
 
   constructor(private titulo: Title,
-    private sanitizer: DomSanitizer,
     private router: Router,
     private httpClient: HttpClient,
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private uploadService: UploadService,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService,) { }
 
   ngOnInit(): void {
     this.titulo.setTitle('Consultar Arquivos');
@@ -51,51 +56,40 @@ export class ListagemUploadArquivoComponent implements OnInit {
       this.arquivos = resp;
       console.log(resp);
     }, err => {
-      this.spinner.hide();
+      setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+      }, 3000);
     }, () => {
-      this.spinner.hide();
+      setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+      }, 3000);
     });
   }
 
 
-  //this.retrieveResonse = resp;
-  //this.base64Data = this.retrieveResonse.image;
-  //this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-  getImagem() {
-    this.httpClient.get('http://localhost:8080/upload/' + this.uploadArquivo.id)
-      .subscribe(resp => {
-        this.resposta = resp;
-        this.base64Data = this.resposta.dados;
-        this.retrievedImage = 'data:application/pdf;base64,' + this.base64Data;
-      });
-  }
-
-  //const blob = new Blob([data], { type: 'application/octet-stream' });
-  //this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
-
-  async downloadArquivo(arquivo: UploadArquivo) {
-    const base64 = await fetch(arquivo.dados);
-    console.log(base64);
-    const blob = await base64.blob();
-    console.log(blob);
-    let file = new Blob([arquivo.dados], { type: 'application/octet-stream' });
-    let fileURL = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(file));
-    //window.open(fileURL);
-    //URL.createObjectURL(file);
-    console.log(fileURL);
-    //window.open(fileURL);
-  }
-
   /**
   * Realizar download dos arquivos
   * @param arquivo 
-  * application/octet-stream
-  * data:image/jpeg;base64,
+  * data:image/jpeg;base64, const dataUrl = `data:${contentType};base64,${b64Data}`;
   */
   async downloadArquivos(arquivo: UploadArquivo) {
-    const base64 = await fetch('data:application/octet-stream;base64,' + arquivo.dados);
+
+    const dataUrl = `data:${arquivo.type};base64,${arquivo.dados}`;
+    const base64 = await fetch(dataUrl);
+
+    console.log(base64 + dataUrl);
+
     const blob = await base64.blob();
-    let file = new Blob([blob], { type: 'application/pdf'});
+
+    let file = new Blob([blob],
+      {
+        type: `${arquivo.type}` //'application/pdf'
+
+      });
+
+    console.log(file);
     let fileURL = URL.createObjectURL(file);
     console.log(fileURL);
     window.open(fileURL);

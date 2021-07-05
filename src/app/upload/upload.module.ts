@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { UploadRoutingModule } from './upload-routing.module';
 import { UploadArquivoComponent } from './upload-arquivo/upload-arquivo.component';
 import { ListagemUploadArquivoComponent } from './listagem-upload-arquivo/listagem-upload-arquivo.component';
+import { FormsModule } from '@angular/forms';
+// Import library module
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 @NgModule({
@@ -13,7 +16,10 @@ import { ListagemUploadArquivoComponent } from './listagem-upload-arquivo/listag
   ],
   imports: [
     CommonModule,
-    UploadRoutingModule
+    UploadRoutingModule,
+    FormsModule,
+    NgxSpinnerModule,
+
   ]
 })
 export class UploadModule { }
