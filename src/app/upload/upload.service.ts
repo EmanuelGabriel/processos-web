@@ -30,6 +30,7 @@ export class UploadService {
   }
 
   getAll(): Observable<UploadArquivo[]> {
+    console.log(`${this.urlBase}`);
     return this.http.get<UploadArquivo[]>(`${this.urlBase}`).pipe(catchError(this.handleError.bind(this)));
   }
 

@@ -8,13 +8,6 @@ import { UploadService } from '../upload.service';
 import { UploadArquivo } from '../model/upload-arquivo';
 
 
-const MIME_TYPES = {
-  pdf: 'application/pdf',
-  octet: 'application/octet-stream',
-  png: 'image/png',
-  jpeg: 'image/jpeg',
-}
-
 
 @Component({
   selector: 'app-listagem-upload-arquivo',
@@ -27,6 +20,7 @@ export class ListagemUploadArquivoComponent implements OnInit {
   uploadArquivo: UploadArquivo;
   nomeArquivo: any;
   arrayArquivo: any;
+  value: string;
 
 
   retrievedImage: any;
@@ -47,8 +41,25 @@ export class ListagemUploadArquivoComponent implements OnInit {
     this.titulo.setTitle('Consultar Arquivos');
 
     this.getAll();
+
   }
 
+  procura() {
+    this.uploadService.getAll().subscribe(dados => {
+      if (this.value) {
+        dados = dados.filter(coluna => {
+          return coluna.nome.trim().toLocaleLowerCase().indexOf(this.value.trim().toLocaleLowerCase()) >= 0 ||
+            coluna.type.trim().toLocaleLowerCase().indexOf(this.value.trim().toLocaleLowerCase()) >= 0
+        });
+      }
+
+      this.arquivos = dados;
+    });
+  }
+
+  filtro() {
+    this.procura();
+  }
 
   getAll() {
     this.spinner.show();
@@ -57,12 +68,10 @@ export class ListagemUploadArquivoComponent implements OnInit {
       console.log(resp);
     }, err => {
       setTimeout(() => {
-        /** spinner ends after 5 seconds */
         this.spinner.hide();
       }, 3000);
     }, () => {
       setTimeout(() => {
-        /** spinner ends after 5 seconds */
         this.spinner.hide();
       }, 3000);
     });

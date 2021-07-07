@@ -61,12 +61,10 @@ export class UploadArquivoComponent implements OnInit {
       }
     }, err => {
       setTimeout(() => {
-        /** spinner ends after 5 seconds */
         this.spinner.hide();
       }, 3000);
     }, () => {
       setTimeout(() => {
-        /** spinner ends after 5 seconds */
         this.spinner.hide();
       }, 3000);
     });
