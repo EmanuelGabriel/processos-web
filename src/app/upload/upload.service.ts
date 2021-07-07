@@ -4,7 +4,6 @@ import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UploadArquivo } from './model/upload-arquivo';
 import { catchError } from 'rxjs/operators';
-import { ImageModel } from './model/image-model';
 
 
 @Injectable({

@@ -49,11 +49,13 @@ export class ListagemUploadArquivoComponent implements OnInit {
       if (this.value) {
         dados = dados.filter(coluna => {
           return coluna.nome.trim().toLocaleLowerCase().indexOf(this.value.trim().toLocaleLowerCase()) >= 0 ||
-            coluna.type.trim().toLocaleLowerCase().indexOf(this.value.trim().toLocaleLowerCase()) >= 0
+            coluna.type.trim().toLocaleLowerCase().indexOf(this.value.trim().toLocaleLowerCase()) >= 0 ||
+            coluna.tamanho.toString().toLocaleLowerCase().indexOf(this.value.trim().toLocaleLowerCase()) >= 0
         });
       }
 
       this.arquivos = dados;
+      console.log(dados);
     });
   }
 

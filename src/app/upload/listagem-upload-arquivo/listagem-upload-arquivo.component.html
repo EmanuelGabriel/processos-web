@@ -16,9 +16,12 @@
     </div>
 
     <div class="input-group mb-3">
-        <label for="txtPesquisa"></label>
-        <input type="text" [(ngModel)]="value" class="form-control" id="txtPesquisa" placeholder="Pesquisar por nome do arquivo">
-        <button type="button" aria-label="Procurar" (click)="filtro()"><i class="fas fa-search" aria-hidden="true"></i></button>
+        <input type="text" class="form-control" [(ngModel)]="value"
+            placeholder="Pesquisar por nome, tipo de conteúdo e tamanho" aria-label="Pesquisar por nome do arquivo"
+            aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="filtro()" type="button">Pesquisar</button>
+        </div>
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 form-group">
@@ -45,9 +48,12 @@
                         {{arquivo.nome}}
                     </td>
                     <td>
-                        <i class="fa fa-file-pdf-o fa-2x" *ngIf="arquivo.nome.substring(arquivo.nome.lastIndexOf('.') + 1).toLowerCase() === 'pdf'"></i>
-                        <i class="fa fa-file-word-o fa-2x" *ngIf="arquivo.nome.substring(arquivo.nome.lastIndexOf('.') + 1).toLowerCase() === 'docx' || arquivo.nome.substring(arquivo.nome.lastIndexOf('.') + 1).toLowerCase() === 'doc'"></i>
-                        <i class="fa fa-file-image-o fa-2x" *ngIf="arquivo.nome.substring(arquivo.nome.lastIndexOf('.') + 1).toLowerCase() === 'png' || arquivo.nome.substring(arquivo.nome.lastIndexOf('.') + 1).toLowerCase() === 'jpeg'"></i>
+                        <i class="fa fa-file-pdf-o fa-2x"
+                            *ngIf="arquivo.nome.substring(arquivo.nome.lastIndexOf('.') + 1).toLowerCase() === 'pdf'"></i>
+                        <i class="fa fa-file-word-o fa-2x"
+                            *ngIf="arquivo.nome.substring(arquivo.nome.lastIndexOf('.') + 1).toLowerCase() === 'docx' || arquivo.nome.substring(arquivo.nome.lastIndexOf('.') + 1).toLowerCase() === 'doc'"></i>
+                        <i class="fa fa-file-image-o fa-2x"
+                            *ngIf="arquivo.nome.substring(arquivo.nome.lastIndexOf('.') + 1).toLowerCase() === 'png' || arquivo.nome.substring(arquivo.nome.lastIndexOf('.') + 1).toLowerCase() === 'jpeg'"></i>
                     </td>
                     <td>
                         {{arquivo.tamanho}}
