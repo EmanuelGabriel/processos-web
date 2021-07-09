@@ -5,6 +5,7 @@ import { take } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { Cliente } from './model/cliente';
+import { FiltroCliente } from './model/filtro-cliente';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,8 @@ export class ClienteService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   }
 
-  getAll(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(`${this.url}`, { headers: this.httpOptions.headers }).pipe(take(1));
+  getAll(): Observable<FiltroCliente> {
+    return this.http.get<FiltroCliente>(`${this.url}`, { headers: this.httpOptions.headers }).pipe(take(1));
   }
 
   getByID(idCliente: number): Observable<Cliente> {

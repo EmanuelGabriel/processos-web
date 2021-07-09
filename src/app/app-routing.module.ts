@@ -8,8 +8,8 @@ const routes: Routes = [
     loadChildren: () => import('./processo/processo.module').then(p => p.ProcessoModule)
   },
   {
-    path: 'documentos',
-    loadChildren: () => import('./documentos/documentos.module').then(d => d.DocumentosModule)
+    path: 'clientes',
+    loadChildren: () => import('./cliente/cliente.module').then(c => c.ClienteModule)
   },
   {
     path: 'situacao',

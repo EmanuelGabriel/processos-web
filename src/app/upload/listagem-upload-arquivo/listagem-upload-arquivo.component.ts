@@ -35,7 +35,7 @@ export class ListagemUploadArquivoComponent implements OnInit {
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private uploadService: UploadService,
-    private spinner: NgxSpinnerService,) { }
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.titulo.setTitle('Consultar Arquivos');

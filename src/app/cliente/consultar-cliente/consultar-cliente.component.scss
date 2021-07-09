@@ -1,3 +1,19 @@
-.divBtn {
- 
+table {
+    border: 1px solid #eeeeee;
+    width: 100%;
+}
+
+.mat-paginator {
+    display: flex;
+    color: black;
+    font-weight:600;
+    justify-content: space-between;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
+}
+
+.hide {
+    display: none;
 }
