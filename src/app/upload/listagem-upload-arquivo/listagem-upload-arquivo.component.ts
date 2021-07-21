@@ -31,7 +31,6 @@ export class ListagemUploadArquivoComponent implements OnInit {
 
   constructor(private titulo: Title,
     private router: Router,
-    private httpClient: HttpClient,
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private uploadService: UploadService,

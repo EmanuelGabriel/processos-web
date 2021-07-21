@@ -4,10 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'processos',
-    loadChildren: () => import('./processo/processo.module').then(p => p.ProcessoModule)
-  },
-  {
     path: 'clientes',
     loadChildren: () => import('./cliente/cliente.module').then(c => c.ClienteModule)
   },

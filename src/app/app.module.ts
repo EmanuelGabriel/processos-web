@@ -5,7 +5,6 @@ import { NgxMaskModule } from 'ngx-mask'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ClienteModule } from './cliente/cliente.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './components/template/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,6 +31,7 @@ import { NgxSpinnerModule } from 'ngx-spinner'
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
@@ -47,11 +47,7 @@ import { NgxSpinnerModule } from 'ngx-spinner'
       preventDuplicates: true,
     }),
 
-
-    ClienteModule,
-
-    NgbModule,
-    BrowserAnimationsModule
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

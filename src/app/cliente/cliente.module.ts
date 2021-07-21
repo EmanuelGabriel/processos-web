@@ -9,18 +9,24 @@ import { CadastroClienteComponent } from './cadastro-cliente/cadastro-cliente.co
 // Import library module
 import { NgxSpinnerModule } from "ngx-spinner";
 import { MatInputModule } from '@angular/material/input';
-import { BrowserModule } from '@angular/platform-browser';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { CpfPipePipe } from './pipes/cpf-pipe.pipe';
+import { MatStepperModule } from '@angular/material/stepper';
+import { ReactiveFormsModule } from '@angular/forms';
+
+
 
 
 @NgModule({
   declarations: [
     ConsultarClienteComponent,
-    CadastroClienteComponent
+    CadastroClienteComponent,
+    CpfPipePipe
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     ClienteRoutingModule,
     NgxSpinnerModule,
     MatTableModule,
@@ -28,8 +34,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     NgxMaskModule.forRoot(),
 
 
-    BrowserModule,
     MatInputModule,
+    MatStepperModule,
   ]
 })
 export class ClienteModule { }

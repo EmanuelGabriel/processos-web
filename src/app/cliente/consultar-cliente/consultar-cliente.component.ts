@@ -24,7 +24,7 @@ export class ConsultarClienteComponent implements OnInit, AfterViewInit {
   clientes: Cliente[] = [];
   filtroCliente = new FiltroCliente();
   dataSource = new MatTableDataSource<Cliente>(this.clientes);
-  
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   TextoNaoHaRegistro = 'Nenhum registro para visualizar';
@@ -58,9 +58,6 @@ export class ConsultarClienteComponent implements OnInit, AfterViewInit {
   getAll() {
     this.spinner.show();
     this.clienteService.getAll().subscribe(resp => {
-      //this.clientes = resp.content;
-      //this.totalElementos = resp.totalElements;
-      //this.pagina = resp.number;
       this.dataSource = new MatTableDataSource<Cliente>(resp.content);
       this.dataSource.paginator = this.paginator;
       this.dataSource.paginator._intl.itemsPerPageLabel = 'Exibir';
@@ -68,11 +65,11 @@ export class ConsultarClienteComponent implements OnInit, AfterViewInit {
     }, err => {
       setTimeout(() => {
         this.spinner.hide();
-      }, 3000);
+      }, 2000);
     }, () => {
       setTimeout(() => {
         this.spinner.hide();
-      }, 3000);
+      }, 2000);
     });
   }
 
@@ -93,3 +90,4 @@ export class ConsultarClienteComponent implements OnInit, AfterViewInit {
 
 
 }
+  
