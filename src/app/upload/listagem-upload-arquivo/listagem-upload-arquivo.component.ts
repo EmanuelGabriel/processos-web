@@ -127,4 +127,23 @@ export class ListagemUploadArquivoComponent implements OnInit {
     reader.readAsDataURL(blob);
   });
 
+
+  /**
+   * @author emanuel.sousa
+   * Método responsável em formatar os bytes do tamanho do arquivo
+   * @param bytes 
+   * @param decimals 
+   * @returns string
+   */
+  formatarBytes(bytes: any, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const tamanhos = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + tamanhos[i];
+  }
+
 }
