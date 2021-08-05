@@ -85,9 +85,21 @@ export class ConsultarClienteComponent implements OnInit, AfterViewInit {
  * Filtro geral de busca de documentos por seus campos na Triagem
  */
   filtro() {
-
+    this.procura();
   }
 
+  procura() {
+      this.clienteService.getAll().subscribe(dados => {
+         if(this.value){
+           dados.content = dados.content.filter(coluna => {
+            return coluna.nome.trim().toLocaleLowerCase().indexOf(this.value.trim().toLocaleLowerCase()) >= 0
+           });
+         }
+         this.clientes = dados.content;
+         console.log(dados);
+      });
+
+  }
 
 }
   
