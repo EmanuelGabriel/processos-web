@@ -5,15 +5,33 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CpfPipePipe implements PipeTransform {
 
-  transform(value: string, zenkaku: boolean = true): string {
-    if (!value && value.length < 10) {
-      return value;
+  transform(value: string, ocultarAlgunsValores: boolean = false): string {
+
+    /** 
+    if (value.length === 11) {
+      return value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '\$1.\$2.\$3\-\$4');
     }
-    if (value.length < 12) {
-      return `${value.substr(0, 3)}.${value.substr(3, 3)}.${value.substr(6, 3)}-${value.substr(-1)}`
-    } else {
-      return `${value.substr(0, 2)}.${value.substr(2, 3)}.${value.substr(5, 3)}/${value.substr(8, 4)}-${value.substr(12)}`
+    return 'error';
+  } */
+
+
+    let valorFormatado = value + '';
+
+    valorFormatado = valorFormatado
+      .padStart(11, '0')                  // item 1
+      .substr(0, 11)                      // item 2
+      .replace(/[^0-9]/, '')              // item 3
+      .replace(                           // item 4
+        /(\d{3})(\d{3})(\d{3})(\d{2})/,
+        '$1.$2.$3-$4'
+      );
+
+    if (ocultarAlgunsValores) {
+      valorFormatado = 'XXX.' + valorFormatado.substr(4, 7) + '-XX';
     }
+
+    return valorFormatado;
+
   }
 
 }

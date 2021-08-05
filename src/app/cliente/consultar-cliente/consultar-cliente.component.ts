@@ -9,7 +9,7 @@ import { FiltroCliente } from '../model/filtro-cliente';
 
 
 interface Filtro {
-  column: string;
+  coluna: string;
   value: any;
 }
 
@@ -49,7 +49,7 @@ export class ConsultarClienteComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.titulo.setTitle('Pesquisar cliente');
+    this.titulo.setTitle('Pesquisar Cliente');
 
     this.getAll();
   }
@@ -85,21 +85,63 @@ export class ConsultarClienteComponent implements OnInit, AfterViewInit {
  * Filtro geral de busca de documentos por seus campos na Triagem
  */
   filtro() {
-    this.procura();
+    if (this.value) {
+      this.dataSource.filterPredicate = (coluna: any, valorFiltrado: string) => {
+        return coluna.nome.trim().toLocaleLowerCase().indexOf(this.value.trim().toLocaleLowerCase()) >= 0
+      };
+
+      this.dataSource.filter = this.value.trim().toLowerCase();
+
+      if (!(this.dataSource !== null && this.dataSource.data.length === 0)) {
+        if (this.dataSource.filteredData.length === 0) {
+          this.TextoNaoHaRegistro = 'Nenhum registro para visualizar';
+        }
+      }
+
+    } else {
+      this.procura();
+    }
+
   }
 
   procura() {
-      this.clienteService.getAll().subscribe(dados => {
-         if(this.value){
-           dados.content = dados.content.filter(coluna => {
-            return coluna.nome.trim().toLocaleLowerCase().indexOf(this.value.trim().toLocaleLowerCase()) >= 0
-           });
-         }
-         this.clientes = dados.content;
-         console.log(dados);
-      });
+    this.spinner.show();
+    this.clienteService.getAll().subscribe(dados => {
+      if (this.value) {
+        dados.content = dados.content.filter(coluna => {
+          return coluna.nome.trim().toLocaleLowerCase().indexOf(this.value.trim().toLocaleLowerCase()) >= 0 ||
+            coluna.email.trim().toLocaleLowerCase().indexOf(this.value.trim().toLocaleLowerCase()) >= 0 ||
+            coluna.cpf.trim().toLocaleLowerCase().indexOf(this.value.trim().toLocaleLowerCase()) >= 0 ||
+            coluna.rg.trim().toLocaleLowerCase().indexOf(this.value.trim().toLocaleLowerCase()) >= 0 ||
+            coluna.celular.trim().toLocaleLowerCase().indexOf(this.value.trim().toLocaleLowerCase()) >= 0
+        }
+
+
+
+        );
+      }
+
+      this.dataSource = new MatTableDataSource<Cliente>(dados.content);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl.itemsPerPageLabel = 'Exibir';
+      this.clientes = dados.content;
+      console.log(dados);
+    }, err => {
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 2000);
+    }, () => {
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 2000);
+    });
 
   }
 
+
+  reset() {
+    this.value = "";
+    this.procura();
+  }
+
 }
-  

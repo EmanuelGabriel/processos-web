@@ -1,6 +1,30 @@
 table {
+    border: 1px solid #eeeeee;
     width: 100%;
 }
+
+
+.mat-column-id {
+    width: 40px;
+    padding-right: 30px;
+    text-align: center;
+}
+
+.mat-column-nome {
+    width: 310px;
+    text-align: left;
+}
+
+.mat-column-email {
+    width: 210px;
+    text-align: left;
+}
+
+.mat-column-cpf {
+    width: 200px;
+    text-align: left;
+}
+
 
 .mat-paginator {
     display: flex;
